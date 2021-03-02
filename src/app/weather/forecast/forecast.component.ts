@@ -8,15 +8,32 @@ import { WeatherService } from '../weather.service';
 })
 export class ForecastComponent implements OnInit {
 
+  fahrenheit: boolean = true;
+
+  forecastData: any = [];
+
   constructor(
     public weather: WeatherService,
   ) {
-   weather.getForecast().subscribe((coords) => {
-     console.log(coords)
+   weather.getForecast().subscribe((forecast) => {
+     console.log(forecast)
+     this.forecastData = forecast;
    })
   }
 
   ngOnInit(): void {
+  }
+
+  getImageSrc(icon: string) {
+    return `http://openweathermap.org/img/w/${icon}.png`
+  }
+
+  calculateC(temp: number) {
+    return ((temp - 32)*5)/9;
+  }
+
+  toggleUnit() {
+    this.fahrenheit = !this.fahrenheit;
   }
 
 }
