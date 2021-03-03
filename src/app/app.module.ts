@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WeatherModule } from './weather/weather.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { NewsModule } from './news/news.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     HttpClientModule,
     AppRoutingModule,
     WeatherModule,
-    NotificationsModule
+    NotificationsModule,
+    NewsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

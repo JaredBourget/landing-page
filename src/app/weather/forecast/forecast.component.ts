@@ -19,11 +19,13 @@ export class ForecastComponent implements OnInit {
     public weather: WeatherService,
   ) {
     weather.getForecast().subscribe((forecast) => {
+      // grouping forecast by day
       this.forecastData = chain(forecast)
         .groupBy('day')
         .map((value, key) => ({ day: key, weather: value, high: 0, low: 0 }))
         .value()
       this.forecastData.forEach((cast: any) => {
+        // setting a high and low temp for each day (3 hr intervals)
         cast.weather.forEach((day: any, index: number) => {
           if (index === 0) {
             cast.high = day.main.temp_max;
@@ -41,10 +43,6 @@ export class ForecastComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  getImageSrc(icon: string) {
-    return `http://openweathermap.org/img/w/${icon}.png`
   }
 
   calculateC(temp: number) {

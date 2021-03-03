@@ -1,0 +1,14 @@
+.news-col {
+  justify-content: space-between;
+}
+
+.notification-row {
+  justify-content: center;
+}
+
+@media(max-width: 800px) {
+  .news-col {
+    flex-direction: column;
+    justify-content: start;
+  }
+}

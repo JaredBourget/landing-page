@@ -1,4 +1,18 @@
 
-<app-forecast></app-forecast>
-<app-notifications></app-notifications>
+<div class='container-fluid'>
+  <div class='row'>
+    <div class='col-6 col-sm-6 col-md-4 col-lg-4'>
+      <app-forecast></app-forecast>
+    </div>
+    <div class='news-col col-6 col-sm-6 col-md-8 col-lg-8 d-flex'>
+      <app-world-news></app-world-news>
+      <app-tech-news></app-tech-news>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='d-flex notification-row col'>
+      <app-notifications></app-notifications>
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>

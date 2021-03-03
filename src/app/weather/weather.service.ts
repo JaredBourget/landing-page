@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, mergeMap, pluck, filter, toArray } from 'rxjs/operators';
+import { DateTime } from 'luxon';
 import * as env from '../../../config.json';
 
 interface Coords {
@@ -51,15 +52,19 @@ export class WeatherService {
           .set('units', 'imperial')
           .set('appid', env.WEATHER_KEY)
       }),
+      // returns an observable of the API call
       switchMap((params) => {
         return this.http.get<WeatherModel>(this.url, { params })
       }),
+      // selecting only the list property
       pluck('list'),
       mergeMap((value) => {
         return of(...value)
       }),
+      // could also be a map, but might want filtering later
       filter((value, index) => {
         value.day = value.dt_txt.substring(0, 10)
+        // setting weather icon src
         value.weather[0].icon = `http://openweathermap.org/img/w/${value.weather[0].icon}.png`;
         if (value) {
           return true;
