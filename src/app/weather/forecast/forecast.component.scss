@@ -1,0 +1,47 @@
+.card {
+  margin: 0.5rem;
+  min-width: 250px;
+  .card-body {
+    margin-top: 1rem;
+    justify-content: space-between;
+    img {
+      width: 65px;
+      height: 65px;
+    }
+  }
+
+  .card-data {
+    margin-right: 0.5rem;
+    & :hover {
+      cursor: pointer;
+    }
+  }
+
+  .current-temp {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .high-lows {
+    color: 	#484848;
+  }
+
+  .unit-toggle {
+    position: absolute;
+    left: calc(100% - 4rem);
+    top: 0.5rem;
+    & :hover {
+      cursor: pointer;
+    }
+  }
+
+  .card-footer {
+    .current-hourly {
+      justify-content: space-between;
+
+      .hourly-temp, .hourly-time {
+        color: 	#484848;
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -26,7 +26,8 @@ interface WeatherModel {
       icon: string,
       main: string
     }[],
-    dt_txt: string
+    dt_txt: string,
+    day: string
   }[]
 }
 
@@ -58,9 +59,9 @@ export class WeatherService {
         return of(...value)
       }),
       filter((value, index) => {
-        if (index % 8 === 0) {
-          console.log(value)
-          value.weather[0].icon = `http://openweathermap.org/img/w/${value.weather[0].icon}.png`;
+        value.day = value.dt_txt.substring(0, 10)
+        value.weather[0].icon = `http://openweathermap.org/img/w/${value.weather[0].icon}.png`;
+        if (value) {
           return true;
         }
         return false;

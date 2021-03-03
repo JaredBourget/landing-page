@@ -1,16 +1,31 @@
-<p>forecast works!</p>
 <div class='container-fluid'>
   <div class='row'>
-    <div class='col-6 col-sm-6 col-md-6 col-lg-6 d-flex flex-column'>
-      <div class='card' *ngFor='let forecast of forecastData'>
+    <div class='col-6 col-sm-4 col-md-3 col-lg-3 d-flex flex-column'>
+      <div class='card' *ngFor='let forecast of forecastData; let i = index'>
         <div class='card-body d-flex flex-row'>
-          <img src='{{forecast.weather[0].icon}}'/>
-          <div class='card-data d-flex flex-column'>
-            <span (click)='toggleUnit()'>
-              <span [ngStyle]="{'font-weight': fahrenheit ? 'bold' : '400'}">°F</span> | <span [ngStyle]="{'font-weight': fahrenheit ? '400' : 'bold'}">°C</span>
+          <img src='{{forecast.weather[0].weather[0].icon}}'/>
+          <div class='card-data d-flex flex-column' (click)='expandCard(i)'>
+            <span class='main-date'>
+              {{forecast.weather[0].dt_txt | date: 'E d'}}
             </span>
-            <span *ngIf='fahrenheit' class='card-text'>{{forecast.main.temp | number: '1.0-0' }}</span>
-            <span *ngIf='!fahrenheit' class='card-text'>{{calculateC(forecast.main.temp )| number: '1.0-0' }}</span>
+            <span *ngIf='fahrenheit' class='card-text current-temp'>{{forecast.weather[0].main.temp | number: '1.0-0' }}</span>
+            <span *ngIf='!fahrenheit' class='card-text current-temp'>{{calculateC(forecast.weather[0].main.temp )| number: '1.0-0' }}</span>
+          </div>
+          <div class='high-lows d-flex flex-column'>
+            <span *ngIf='fahrenheit'>High: {{forecast.high | number: '1.0-0' }}</span>
+            <span *ngIf='fahrenheit'>Low: {{forecast.low | number: '1.0-0'}}</span>
+            <span *ngIf='!fahrenheit'>High: {{calculateC(forecast.high) | number: '1.0-0' }}</span>
+            <span *ngIf='!fahrenheit'>Low: {{calculateC(forecast.low) | number: '1.0-0'}}</span>
+          </div>
+          <div class='unit-toggle' (click)='toggleUnit()'>
+            <span [ngStyle]="{'font-weight': fahrenheit ? 'bold' : '400'}">°F</span> | <span [ngStyle]="{'font-weight': fahrenheit ? '400' : 'bold'}">°C</span>
+          </div>
+        </div>
+        <div *ngIf='expanded === i' class='card-footer'>
+          <div class='current-hourly d-flex' *ngFor='let weather of forecast.weather'>
+            <span class='hourly-time'>{{ weather.dt_txt | date: 'shortTime' }}</span>
+            <span *ngIf='fahrenheit' class='hourly-temp'>{{ weather.main.temp | number: '1.0-0' }}</span>
+            <span *ngIf='!fahrenheit' class='card-text hourly-temp'>{{ calculateC(weather.main.temp )| number: '1.0-0' }}</span>
           </div>
         </div>
       </div>
