@@ -38,6 +38,13 @@
     .current-hourly {
       justify-content: space-between;
 
+      .hourly-col {
+        justify-content: center;
+        span {
+          margin-bottom: .2rem;
+        }
+      }
+
       .hourly-temp, .hourly-time {
         color: 	#484848;
         font-size: 14px;

@@ -11,7 +11,7 @@ export class ForecastComponent implements OnInit {
 
   fahrenheit: boolean = true;
 
-  expanded: number = 0;
+  expanded: any = null;
 
   forecastData: any = [];
 
@@ -52,7 +52,7 @@ export class ForecastComponent implements OnInit {
   }
 
   expandCard(index: number) {
-    this.expanded = index;
+    this.expanded = this.expanded === index ? null : index;
   }
 
   toggleUnit() {

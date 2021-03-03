@@ -23,9 +23,13 @@
         </div>
         <div *ngIf='expanded === i' class='card-footer'>
           <div class='current-hourly d-flex' *ngFor='let weather of forecast.weather'>
-            <span class='hourly-time'>{{ weather.dt_txt | date: 'shortTime' }}</span>
+            <span class='hourly-time'>
+              <img src='{{weather.weather[0].icon}}'/> {{ weather.dt_txt | date: 'shortTime' }}
+            </span>
+            <div class='d-flex flex-column hourly-col'>
             <span *ngIf='fahrenheit' class='hourly-temp'>{{ weather.main.temp | number: '1.0-0' }}</span>
             <span *ngIf='!fahrenheit' class='card-text hourly-temp'>{{ calculateC(weather.main.temp )| number: '1.0-0' }}</span>
+          </div>
           </div>
         </div>
       </div>
