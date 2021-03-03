@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorldNewsComponent implements OnInit {
 
+  articles: any = [{'art': 'world1'}, {'art': 'world2'}, {'art': 'world3'},{'art': 'world4'}]
+
   constructor() { }
 
   ngOnInit(): void {
