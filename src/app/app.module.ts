@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WeatherModule } from './weather/weather.module';
-// import { NotificationsModule } from './notifications/notifications.module';
 import { NewsModule } from './news/news.module';
 import { HeaderModule } from './header/header.module';
+import { ApiInterceptorService } from './api-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,9 @@ import { HeaderModule } from './header/header.module';
     NewsModule,
     HeaderModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

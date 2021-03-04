@@ -20,9 +20,6 @@ export class NotificationsComponent implements OnInit {
       this.messageList = list;
     });
     setInterval(() => {
-      this.notifications.addMessage('testing', 1)
-    }, 5000)
-    setInterval(() => {
       this.notifications.deleteMessage(1)
     }, 60000)
    }
