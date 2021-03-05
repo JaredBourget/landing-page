@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { scan } from 'rxjs/operators';
+import { scan, map } from 'rxjs/operators';
 
 
 export interface Notification {
-  id: number;
+  id?: number;
   msg?: string;
-  type: 'success' | 'error' | 'clear';
+  type: string;
+  read?: boolean;
+  status?: number;
+  errorMsg?: string;
 }
 
 
@@ -22,26 +25,41 @@ export class NotificationsService {
     this.messagesInput = new Subject<Notification>()
     this.messagesOutput = this.messagesInput.pipe(
       scan((acc: Notification[], value: Notification) => {
-        console.log(acc)
-        return value.type === 'clear' ? acc.filter(msg => msg.id !== value.id) : [...acc, value]
+        if (value.type === 'clear') {
+          return acc.filter(msg => msg.id !== value.id);
+        } else if (value.type === 'read') {
+          return acc.map((val) => {
+            val.read = true;
+            return val;
+          })
+        }
+        return [...acc, value]
       }, [])
     )
   }
 
-  addMessage(message: string, id: number) {
-    console.log(message)
+  addMessage(message: string, type: string, status: number, errorMsg: string = '') {
+    // creating a new message
     this.messagesInput.next({
-      id,
+      id: Math.floor(Math.random()*10000),
       msg: message,
-      type: 'success'
+      type,
+      read: false,
+      status,
+      errorMsg
     });
   }
 
   readMessages() {
-
+    // flagging all messages as read
+    this.messagesInput.next({
+      type: 'read',
+      read: true
+    })
   }
 
   deleteMessage(id: number) {
+    // filtering out message by id
     this.messagesInput.next({
       id,
       type: 'clear'

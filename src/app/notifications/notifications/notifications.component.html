@@ -1,9 +1,14 @@
 
 <div class='badge-container'>
-  <button type='button' (click)='expandNotifications()'>{{expanded ? 'Hide' : 'Show'}} Notifications
-    <span class='badge badge-light'>{{ messageList.length }}</span>
+  <button class='btn btn-light' type='button' (click)='expandNotifications()'>{{expanded ? 'Hide' : 'Show'}} Notifications
+    <span *ngIf='unreadMessages > 0' class='badge badge-primary'>{{ unreadMessages }}</span>
   </button>
   <ul *ngIf='expanded' class='list list-container'>
-    <li [ngClass]="msg?.type === 'success' ? 'list-item success' : 'list-item danger'" *ngFor='let msg of messageList'>{{ msg?.msg }}</li>
+    <li [ngClass]="msg?.type === 'success' ? 'list-item success' : 'list-item danger'" 
+    *ngFor='let msg of messageList.slice().reverse()'>
+      <span class='msg'>{{msg?.msg}}</span> 
+      <span *ngIf='msg.errorMsg'>: Error: {{msg?.errorMsg}}</span>
+      <button class='btn btn-light' (click)='deleteNotification(msg.id)' type='button'>X</button>
+    </li>
   </ul>
 </div>

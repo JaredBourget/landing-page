@@ -1,15 +1,30 @@
 .list-container {
+  padding-right: 1rem;
+  padding-top: 0.5rem;
   position: absolute;
   top: 3.5rem;
+  left: calc(100% - 15rem);
+  width: 15rem;
   max-height: 15rem;
-  width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  opacity: 0.8;
+  opacity: 0.9;
   background-color: #343a40;
   color: #f0f0f0;
 
   .success {
     color: green
+  }
+  .danger {
+    color: red;
+  }
+  li {
+    margin-bottom: .5rem;
+    hyphens: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .msg {
+    padding-top: .5rem;
   }
 }

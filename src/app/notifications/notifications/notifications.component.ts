@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService, Notification } from '../notifications.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -11,17 +10,19 @@ export class NotificationsComponent implements OnInit {
 
   messageList: any = []
 
+  unreadMessages: number = 0;
+
   expanded: boolean = false;
 
   constructor(
-    public notifications: NotificationsService
+    public ns: NotificationsService
   ) {
-    this.notifications.messagesOutput.subscribe((list) => {
+    this.ns.messagesOutput.subscribe((list) => {
       this.messageList = list;
+      this.unreadMessages = list.filter((value: Notification) => {
+        return !value.read;
+      }).length;
     });
-    setInterval(() => {
-      this.notifications.deleteMessage(1)
-    }, 60000)
    }
 
   ngOnInit(): void {
@@ -29,5 +30,12 @@ export class NotificationsComponent implements OnInit {
 
   expandNotifications() {
     this.expanded = !this.expanded;
+    if (this.expanded) {
+      this.ns.readMessages();
+    }
+  }
+
+  deleteNotification(id: number) {
+    this.ns.deleteMessage(id)
   }
 }

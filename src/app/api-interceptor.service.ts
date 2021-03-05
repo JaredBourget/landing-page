@@ -24,22 +24,19 @@ export class ApiInterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       tap(evt => {
-        console.log(evt)
         if (evt instanceof HttpResponse) {
           if (evt.body && evt.status === 200) {
-            this.ns.addMessage('success', 200)
+            this.ns.addMessage('API call success', 'success', evt.status)
           }
         }
       }),
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
-          console.log(err)
           try {
-            // this.toasterService.error(err.error.msg ? err.error.msg : 'Unauthorized', 'Error:', { positionClass: 'toast-bottom-center' });
+            this.ns.addMessage('API call failure', 'danger', err.status, err.error.message)
           } catch (e) {
             // this.toasterService.error('An error occurred', '', { positionClass: 'toast-bottom-center' });
           }
-          //log error 
         }
         return of(err);
       }));
